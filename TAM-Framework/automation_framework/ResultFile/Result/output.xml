@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 4.0 (Python 3.8.8 on win32)" generated="20220113 15:59:04.883" rpa="false" schemaversion="2">
+<suite id="s1" name="Automation Framework" source="D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework">
+<suite id="s1-s1" name="TestSuite" source="D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\TestSuite">
+<suite id="s1-s1-s1" name="Demo MobileApp" source="D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\TestSuite\Demo_MobileApp">
+<suite id="s1-s1-s1-s1" name="Demo Suite MobileApp" source="D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\TestSuite\Demo_MobileApp\Demo_Suite_MobileApp.robot">
+<kw name="ArchiveFile" library="Demo_Setup_TearDown" type="SETUP">
+<kw name="Get Current Date" library="DateTime">
+<var>${dateTimeStampResultFolder}</var>
+<arg>result_format=%d-%m-%Y-%H-%M-%S</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<msg timestamp="20220113 15:59:08.328" level="INFO">${dateTimeStampResultFolder} = 13-01-2022-15-59-08</msg>
+<status status="PASS" starttime="20220113 15:59:08.328" endtime="20220113 15:59:08.328"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${path}</var>
+<arg>D:\\Mobile_Automation\\CogniProduct_Demo\\TAM-Framework\\automation_framework\\Keywords/../ResultFile/Result</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20220113 15:59:08.329" level="INFO">${path} = D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\Keywords/../ResultFile/Result</msg>
+<status status="PASS" starttime="20220113 15:59:08.329" endtime="20220113 15:59:08.329"/>
+</kw>
+<kw name="Count Files In Directory" library="OperatingSystem">
+<var>${countFiles}</var>
+<arg>D:\\Mobile_Automation\\CogniProduct_Demo\\TAM-Framework\\automation_framework\\Keywords/../ResultFile/Result</arg>
+<doc>Wrapper for `Count Items In Directory` returning only file count.</doc>
+<msg timestamp="20220113 15:59:08.330" level="INFO" html="true">Listing contents of directory '&lt;a href="file://D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result"&gt;D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result&lt;/a&gt;'.</msg>
+<msg timestamp="20220113 15:59:08.331" level="INFO">7 files.</msg>
+<msg timestamp="20220113 15:59:08.331" level="INFO">${countFiles} = 7</msg>
+<status status="PASS" starttime="20220113 15:59:08.330" endtime="20220113 15:59:08.331"/>
+</kw>
+<kw name="Count Directories In Directory" library="OperatingSystem">
+<var>${countDirectories}</var>
+<arg>D:\\Mobile_Automation\\CogniProduct_Demo\\TAM-Framework\\automation_framework\\Keywords/../ResultFile/Result</arg>
+<doc>Wrapper for `Count Items In Directory` returning only directory count.</doc>
+<msg timestamp="20220113 15:59:08.332" level="INFO" html="true">Listing contents of directory '&lt;a href="file://D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result"&gt;D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result&lt;/a&gt;'.</msg>
+<msg timestamp="20220113 15:59:08.333" level="INFO">0 directories.</msg>
+<msg timestamp="20220113 15:59:08.334" level="INFO">${countDirectories} = 0</msg>
+<status status="PASS" starttime="20220113 15:59:08.332" endtime="20220113 15:59:08.334"/>
+</kw>
+<kw name="Count Files In Directory" library="OperatingSystem">
+<var>${countFilesRobotLogs}</var>
+<arg>D:\\Mobile_Automation\\CogniProduct_Demo\\TAM-Framework\\automation_framework\\Keywords/../ResultFile/Result</arg>
+<doc>Wrapper for `Count Items In Directory` returning only file count.</doc>
+<msg timestamp="20220113 15:59:08.334" level="INFO" html="true">Listing contents of directory '&lt;a href="file://D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result"&gt;D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result&lt;/a&gt;'.</msg>
+<msg timestamp="20220113 15:59:08.335" level="INFO">7 files.</msg>
+<msg timestamp="20220113 15:59:08.335" level="INFO">${countFilesRobotLogs} = 7</msg>
+<status status="PASS" starttime="20220113 15:59:08.334" endtime="20220113 15:59:08.335"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<var>@{fileList}</var>
+<arg>'${countFiles}'&gt;='1'</arg>
+<arg>OperatingSystem.List Files In Directory</arg>
+<arg>D:\\Mobile_Automation\\CogniProduct_Demo\\TAM-Framework\\automation_framework\\Keywords/../ResultFile/Result</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="List Files In Directory" library="OperatingSystem">
+<arg>D:\\Mobile_Automation\\CogniProduct_Demo\\TAM-Framework\\automation_framework\\Keywords/../ResultFile/Result</arg>
+<doc>Wrapper for `List Directory` that returns only files.</doc>
+<msg timestamp="20220113 15:59:08.337" level="INFO" html="true">Listing contents of directory '&lt;a href="file://D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result"&gt;D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result&lt;/a&gt;'.</msg>
+<msg timestamp="20220113 15:59:08.338" level="INFO">7 files:
+DemoAPI.json
+['Automation Framework', 'TestSuite', 'Demo MobileApp', 'Demo Suite MobileApp']-Open_Mob_App.png
+['Automation Framework', 'TestSuite', 'Demo MobileApp', 'Demo Suite MobileApp']-login_with_user.png
+['Automation Framework', 'TestSuite', 'Demo MobileApp', 'Demo Suite MobileApp']-logout_user.png
+log.html
+output.xml
+report.html</msg>
+<status status="PASS" starttime="20220113 15:59:08.336" endtime="20220113 15:59:08.338"/>
+</kw>
+<msg timestamp="20220113 15:59:08.338" level="INFO">@{fileList} = [ DemoAPI.json | ['Automation Framework', 'TestSuite', 'Demo MobileApp', 'Demo Suite MobileApp']-Open_Mob_App.png | ['Automation Framework', 'TestSuite', 'Demo MobileApp', 'Demo Suite MobileApp']-logi...</msg>
+<status status="PASS" starttime="20220113 15:59:08.336" endtime="20220113 15:59:08.338"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<var>${fileName}</var>
+<arg>'${countFiles}'&gt;='1'</arg>
+<arg>Set Variable</arg>
+<arg>@{fileList}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Set Variable" library="BuiltIn">
+<arg>@{fileList}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" starttime="20220113 15:59:08.339" endtime="20220113 15:59:08.340"/>
+</kw>
+<msg timestamp="20220113 15:59:08.340" level="INFO">${fileName} = ['DemoAPI.json', "['Automation Framework', 'TestSuite', 'Demo MobileApp', 'Demo Suite MobileApp']-Open_Mob_App.png", "['Automation Framework', 'TestSuite', 'Demo MobileApp', 'Demo Suite MobileApp']-lo...</msg>
+<status status="PASS" starttime="20220113 15:59:08.339" endtime="20220113 15:59:08.340"/>
+</kw>
+<kw name="Comment" library="BuiltIn">
+<arg>${timeStamp_RobotLogs_Archiving}</arg>
+<arg>Run Keyword If</arg>
+<arg>'${countFiles}'&gt;='1'</arg>
+<arg>remove string</arg>
+<arg>${fileName}</arg>
+<arg>Result_</arg>
+<arg>.zip</arg>
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<status status="PASS" starttime="20220113 15:59:08.340" endtime="20220113 15:59:08.341"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'${countFilesRobotLogs}'&gt;='1'</arg>
+<arg>Archive Folder With Zip</arg>
+<arg>D:\\Mobile_Automation\\CogniProduct_Demo\\TAM-Framework\\automation_framework\\Keywords/../ResultFile/Result</arg>
+<arg>D:\\Mobile_Automation\\CogniProduct_Demo\\TAM-Framework\\automation_framework\\Keywords/../ResultFile/Result/${SUITE NAME.rsplit('.')[-1]}-Result-${dateTimeStampResultFolder} .zip</arg>
+<arg>sub_directories=True</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Archive Folder With Zip" library="RPA.Archive">
+<arg>D:\\Mobile_Automation\\CogniProduct_Demo\\TAM-Framework\\automation_framework\\Keywords/../ResultFile/Result</arg>
+<arg>D:\\Mobile_Automation\\CogniProduct_Demo\\TAM-Framework\\automation_framework\\Keywords/../ResultFile/Result/${SUITE NAME.rsplit('.')[-1]}-Result-${dateTimeStampResultFolder} .zip</arg>
+<arg>sub_directories=True</arg>
+<doc>Create a zip archive of a folder</doc>
+<status status="PASS" starttime="20220113 15:59:08.341" endtime="20220113 15:59:08.350"/>
+</kw>
+<status status="PASS" starttime="20220113 15:59:08.341" endtime="20220113 15:59:08.350"/>
+</kw>
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<arg>Run Keyword If</arg>
+<arg>'${countFilesRobotLogs}'&gt;='1'</arg>
+<arg>Remove Files</arg>
+<arg>${path}/*.html</arg>
+<arg>${path}/*.txt</arg>
+<arg>${path}/*.png</arg>
+<arg>${path}/*.webm</arg>
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'${countFilesRobotLogs}'&gt;='1'</arg>
+<arg>Remove Files</arg>
+<arg>${path}/*.html</arg>
+<arg>${path}/*.txt</arg>
+<arg>${path}/*.png</arg>
+<arg>${path}/*.webm</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Remove Files" library="OperatingSystem">
+<arg>${path}/*.html</arg>
+<arg>${path}/*.txt</arg>
+<arg>${path}/*.png</arg>
+<arg>${path}/*.webm</arg>
+<doc>Uses `Remove File` to remove multiple files one-by-one.</doc>
+<msg timestamp="20220113 15:59:08.353" level="INFO" html="true">Removed file '&lt;a href="file://D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result\log.html"&gt;D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result\log.html&lt;/a&gt;'.</msg>
+<msg timestamp="20220113 15:59:08.355" level="INFO" html="true">Removed file '&lt;a href="file://D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result\report.html"&gt;D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result\report.html&lt;/a&gt;'.</msg>
+<msg timestamp="20220113 15:59:08.355" level="INFO" html="true">File '&lt;a href="file://D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result\*.txt"&gt;D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result\*.txt&lt;/a&gt;' does not exist.</msg>
+<msg timestamp="20220113 15:59:08.355" level="INFO" html="true">Removed file '&lt;a href="file://D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result\['Automation Framework', 'TestSuite', 'Demo MobileApp', 'Demo Suite MobileApp']-login_with_user.png"&gt;D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result\['Automation Framework', 'TestSuite', 'Demo MobileApp', 'Demo Suite MobileApp']-login_with_user.png&lt;/a&gt;'.</msg>
+<msg timestamp="20220113 15:59:08.357" level="INFO" html="true">Removed file '&lt;a href="file://D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result\['Automation Framework', 'TestSuite', 'Demo MobileApp', 'Demo Suite MobileApp']-logout_user.png"&gt;D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result\['Automation Framework', 'TestSuite', 'Demo MobileApp', 'Demo Suite MobileApp']-logout_user.png&lt;/a&gt;'.</msg>
+<msg timestamp="20220113 15:59:08.357" level="INFO" html="true">Removed file '&lt;a href="file://D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result\['Automation Framework', 'TestSuite', 'Demo MobileApp', 'Demo Suite MobileApp']-Open_Mob_App.png"&gt;D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result\['Automation Framework', 'TestSuite', 'Demo MobileApp', 'Demo Suite MobileApp']-Open_Mob_App.png&lt;/a&gt;'.</msg>
+<msg timestamp="20220113 15:59:08.359" level="INFO" html="true">File '&lt;a href="file://D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result\*.webm"&gt;D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result\*.webm&lt;/a&gt;' does not exist.</msg>
+<status status="PASS" starttime="20220113 15:59:08.352" endtime="20220113 15:59:08.359"/>
+</kw>
+<status status="PASS" starttime="20220113 15:59:08.351" endtime="20220113 15:59:08.360"/>
+</kw>
+<status status="PASS" starttime="20220113 15:59:08.351" endtime="20220113 15:59:08.360"/>
+</kw>
+<status status="PASS" starttime="20220113 15:59:08.327" endtime="20220113 15:59:08.360"/>
+</kw>
+<test id="s1-s1-s1-s1-t1" name="TC_01_MobileApp_Ondemand">
+<kw name="Open_chat_Application" library="Demo_Keyword">
+<kw name="Open Application" library="AppiumLibrary">
+<arg>http://localhost:4723/wd/hub</arg>
+<arg>platformName=Android</arg>
+<arg>deviceName=emulator-5554</arg>
+<arg>appPackage=chat21.android.demo</arg>
+<arg>appActivity=chat21.android.demo.SplashActivity</arg>
+<doc>Opens a new application to given Appium server.
+Capabilities of appium server, Android and iOS,
+Please check https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/server-args.md
+| *Option*            | *Man.* | *Description*     |
+| remote_url          | Yes    | Appium server url |
+| alias               | no     | alias             |</doc>
+<status status="PASS" starttime="20220113 15:59:08.361" endtime="20220113 15:59:17.367"/>
+</kw>
+<kw name="Capture Page Screenshot" library="AppiumLibrary">
+<arg>${SCREENSHOT_DIR}/${SUITE NAME.rsplit('.')}-Open_Mob_App.png</arg>
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<msg timestamp="20220113 15:59:18.387" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="%5B%27Automation%20Framework%27%2C%20%27TestSuite%27%2C%20%27Demo%20MobileApp%27%2C%20%27Demo%20Suite%20MobileApp%27%5D-Open_Mob_App.png"&gt;&lt;img src="%5B%27Automation%20Framework%27%2C%20%27TestSuite%27%2C%20%27Demo%20MobileApp%27%2C%20%27Demo%20Suite%20MobileApp%27%5D-Open_Mob_App.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20220113 15:59:17.368" endtime="20220113 15:59:18.387"/>
+</kw>
+<status status="PASS" starttime="20220113 15:59:08.361" endtime="20220113 15:59:18.388"/>
+</kw>
+<kw name="Comment" library="BuiltIn">
+<arg>Popup_alert</arg>
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<status status="PASS" starttime="20220113 15:59:18.389" endtime="20220113 15:59:18.389"/>
+</kw>
+<kw name="login_with_user" library="Demo_Keyword">
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<arg>${Mob_login_email_field}</arg>
+<arg>30s</arg>
+<doc>Waits until element specified with `locator` is visible.</doc>
+<status status="PASS" starttime="20220113 15:59:18.391" endtime="20220113 15:59:18.513"/>
+</kw>
+<kw name="Input Text" library="AppiumLibrary">
+<arg>${Mob_login_email_field}</arg>
+<arg>${Mob_user_name}</arg>
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<msg timestamp="20220113 15:59:18.516" level="INFO">Typing text 'shambu@demo.com' into text field 'id=chat21.android.demo:id/email'</msg>
+<status status="PASS" starttime="20220113 15:59:18.513" endtime="20220113 15:59:18.598"/>
+</kw>
+<kw name="Input Text" library="AppiumLibrary">
+<arg>${Mob_login_password_field}</arg>
+<arg>${Mob_password}</arg>
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<msg timestamp="20220113 15:59:18.604" level="INFO">Typing text 'demo123' into text field 'id=chat21.android.demo:id/password'</msg>
+<status status="PASS" starttime="20220113 15:59:18.599" endtime="20220113 15:59:19.169"/>
+</kw>
+<kw name="Capture Page Screenshot" library="AppiumLibrary">
+<arg>${SCREENSHOT_DIR}/${SUITE NAME.rsplit('.')}-login_with_user.png</arg>
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<msg timestamp="20220113 15:59:19.601" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="%5B%27Automation%20Framework%27%2C%20%27TestSuite%27%2C%20%27Demo%20MobileApp%27%2C%20%27Demo%20Suite%20MobileApp%27%5D-login_with_user.png"&gt;&lt;img src="%5B%27Automation%20Framework%27%2C%20%27TestSuite%27%2C%20%27Demo%20MobileApp%27%2C%20%27Demo%20Suite%20MobileApp%27%5D-login_with_user.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20220113 15:59:19.170" endtime="20220113 15:59:19.602"/>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<arg>${Mob_login_button}</arg>
+<doc>Click element identified by `locator`.</doc>
+<msg timestamp="20220113 15:59:19.605" level="INFO">Clicking element 'id=chat21.android.demo:id/login'.</msg>
+<status status="PASS" starttime="20220113 15:59:19.603" endtime="20220113 15:59:19.728"/>
+</kw>
+<status status="PASS" starttime="20220113 15:59:18.390" endtime="20220113 15:59:19.729"/>
+</kw>
+<kw name="logout_user" library="Demo_Keyword">
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<arg>${Mob_main_home_tab}</arg>
+<arg>30s</arg>
+<doc>Waits until element specified with `locator` is visible.</doc>
+<status status="PASS" starttime="20220113 15:59:19.730" endtime="20220113 15:59:23.812"/>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<arg>${Mob_main_profile_tab}</arg>
+<doc>Click element identified by `locator`.</doc>
+<msg timestamp="20220113 15:59:23.817" level="INFO">Clicking element '//android.widget.TextView[@text="PROFILE"]'.</msg>
+<status status="PASS" starttime="20220113 15:59:23.813" endtime="20220113 15:59:24.014"/>
+</kw>
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<arg>${Mob_logout_button}</arg>
+<doc>Waits until element specified with `locator` is visible.</doc>
+<status status="PASS" starttime="20220113 15:59:24.016" endtime="20220113 15:59:25.080"/>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<arg>${Mob_logout_button}</arg>
+<doc>Click element identified by `locator`.</doc>
+<msg timestamp="20220113 15:59:25.086" level="INFO">Clicking element 'id=chat21.android.demo:id/logout'.</msg>
+<status status="PASS" starttime="20220113 15:59:25.081" endtime="20220113 15:59:25.180"/>
+</kw>
+<kw name="Wait Until Page Contains Element" library="AppiumLibrary">
+<arg>${Mob_login_email_field}</arg>
+<arg>30s</arg>
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<status status="PASS" starttime="20220113 15:59:25.181" endtime="20220113 15:59:25.904"/>
+</kw>
+<kw name="Capture Page Screenshot" library="AppiumLibrary">
+<arg>${SCREENSHOT_DIR}/${SUITE NAME.rsplit('.')}-logout_user.png</arg>
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<msg timestamp="20220113 15:59:26.654" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="%5B%27Automation%20Framework%27%2C%20%27TestSuite%27%2C%20%27Demo%20MobileApp%27%2C%20%27Demo%20Suite%20MobileApp%27%5D-logout_user.png"&gt;&lt;img src="%5B%27Automation%20Framework%27%2C%20%27TestSuite%27%2C%20%27Demo%20MobileApp%27%2C%20%27Demo%20Suite%20MobileApp%27%5D-logout_user.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20220113 15:59:25.905" endtime="20220113 15:59:26.654"/>
+</kw>
+<kw name="Close Application" library="AppiumLibrary">
+<doc>Closes the current application and also close webdriver session.</doc>
+<status status="PASS" starttime="20220113 15:59:26.656" endtime="20220113 15:59:27.485"/>
+</kw>
+<status status="PASS" starttime="20220113 15:59:19.729" endtime="20220113 15:59:27.487"/>
+</kw>
+<status status="PASS" starttime="20220113 15:59:08.361" endtime="20220113 15:59:27.488"/>
+</test>
+<kw name="MoveFileToArchive" library="Demo_Setup_TearDown" type="TEARDOWN">
+<kw name="Set Variable" library="BuiltIn">
+<var>${sourcefile}</var>
+<arg>D:\\Mobile_Automation\\CogniProduct_Demo\\TAM-Framework\\automation_framework\\Keywords/../ResultFile/Result/*.zip</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20220113 15:59:27.494" level="INFO">${sourcefile} = D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\Keywords/../ResultFile/Result/*.zip</msg>
+<status status="PASS" starttime="20220113 15:59:27.493" endtime="20220113 15:59:27.495"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${destinationpath}</var>
+<arg>D:\\Mobile_Automation\\CogniProduct_Demo\\TAM-Framework\\automation_framework\\Keywords/../Archive</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20220113 15:59:27.497" level="INFO">${destinationpath} = D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\Keywords/../Archive</msg>
+<status status="PASS" starttime="20220113 15:59:27.496" endtime="20220113 15:59:27.497"/>
+</kw>
+<kw name="Count Files In Directory" library="OperatingSystem">
+<var>${countFiles}</var>
+<arg>D:\\Mobile_Automation\\CogniProduct_Demo\\TAM-Framework\\automation_framework\\Keywords/../ResultFile/Result</arg>
+<doc>Wrapper for `Count Items In Directory` returning only file count.</doc>
+<msg timestamp="20220113 15:59:27.499" level="INFO" html="true">Listing contents of directory '&lt;a href="file://D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result"&gt;D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result&lt;/a&gt;'.</msg>
+<msg timestamp="20220113 15:59:27.501" level="INFO">6 files.</msg>
+<msg timestamp="20220113 15:59:27.502" level="INFO">${countFiles} = 6</msg>
+<status status="PASS" starttime="20220113 15:59:27.498" endtime="20220113 15:59:27.502"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>'${countFiles}'&gt;='1'</arg>
+<arg>OperatingSystem.Move Files</arg>
+<arg>${sourcefile}</arg>
+<arg>${destinationpath}</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Move Files" library="OperatingSystem">
+<arg>${sourcefile}</arg>
+<arg>${destinationpath}</arg>
+<doc>Moves specified files to the target directory.</doc>
+<msg timestamp="20220113 15:59:27.513" level="INFO" html="true">Moved file from '&lt;a href="file://D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result\Demo Suite MobileApp-Result-13-01-2022-15-59-08 .zip"&gt;D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\ResultFile\Result\Demo Suite MobileApp-Result-13-01-2022-15-59-08 .zip&lt;/a&gt;' to '&lt;a href="file://D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\Archive\Demo Suite MobileApp-Result-13-01-2022-15-59-08 .zip"&gt;D:\Mobile_Automation\CogniProduct_Demo\TAM-Framework\automation_framework\Archive\Demo Suite MobileApp-Result-13-01-2022-15-59-08 .zip&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20220113 15:59:27.505" endtime="20220113 15:59:27.513"/>
+</kw>
+<status status="PASS" starttime="20220113 15:59:27.503" endtime="20220113 15:59:27.513"/>
+</kw>
+<status status="PASS" starttime="20220113 15:59:27.492" endtime="20220113 15:59:27.515"/>
+</kw>
+<status status="PASS" starttime="20220113 15:59:04.948" endtime="20220113 15:59:27.516"/>
+</suite>
+<status status="PASS" starttime="20220113 15:59:04.945" endtime="20220113 15:59:27.520"/>
+</suite>
+<status status="PASS" starttime="20220113 15:59:04.942" endtime="20220113 15:59:27.525"/>
+</suite>
+<status status="PASS" starttime="20220113 15:59:04.913" endtime="20220113 15:59:27.531"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Automation Framework">Automation Framework</stat>
+<stat pass="1" fail="0" skip="0" id="s1-s1" name="TestSuite">Automation Framework.TestSuite</stat>
+<stat pass="1" fail="0" skip="0" id="s1-s1-s1" name="Demo MobileApp">Automation Framework.TestSuite.Demo MobileApp</stat>
+<stat pass="1" fail="0" skip="0" id="s1-s1-s1-s1" name="Demo Suite MobileApp">Automation Framework.TestSuite.Demo MobileApp.Demo Suite MobileApp</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

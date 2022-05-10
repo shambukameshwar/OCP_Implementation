@@ -1,0 +1,2 @@
+Flag,JiraID,TestcaseID,UserName,Password,firstname,lastname,zipcode
+Y,QAD-45351,TC_01_WebApp,standard_user,secret_sauce,cogniwide,tech,600096

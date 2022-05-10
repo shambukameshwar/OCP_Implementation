@@ -1,0 +1,216 @@
+*** Settings ***
+Library           Collections
+Library           DateTime
+Library           OperatingSystem
+Library           Process
+Library           RPA.Archive
+Resource          ../ResourceData/Resources.txt    #Library    ../CustomLibrary/Zip Directory.py
+Library           String
+Library           RPA.Excel.Files
+Library           RPA.Tables
+Resource          Demo_Setup_TearDown.txt
+Library           RequestsLibrary
+
+*** Variables ***
+${A1}             ${1}
+${a}              ${0}
+${b}              ${0}
+${executionname}    ${EMPTY}
+${flag}           Y
+
+*** Keywords ***
+ArchiveFile
+    ${dateTimeStampResultFolder}    Get Current Date    result_format=%d-%m-%Y-%H-%M-%S
+    #####    CHECK PREVIOUS BUILD RESULT    FILE IS PRESENT IF PRESENT    REMOVE THE FILE AND MOVE    THE ZIPPED FILE TO ARCHIVE    FOLDERS
+    ${path}    Set Variable    ${CURDIR}/../ResultFile/Result
+    ${countFiles}    OperatingSystem.Count Files In Directory    ${CURDIR}/../ResultFile/Result
+    ${countDirectories}    OperatingSystem.Count Directories In Directory    ${CURDIR}/../ResultFile/Result
+    ${countFilesRobotLogs}    OperatingSystem.Count Files In Directory    ${CURDIR}/../ResultFile/Result
+    @{fileList}    Run Keyword If    '${countFiles}'>='1'    OperatingSystem.List Files In Directory    ${CURDIR}/../ResultFile/Result
+    ${fileName}    Run Keyword If    '${countFiles}'>='1'    Set Variable    @{fileList}
+    Comment    ${timeStamp_RobotLogs_Archiving}    Run Keyword If    '${countFiles}'>='1'    remove string    ${fileName}    Result_    .zip
+    Run Keyword If    '${countFilesRobotLogs}'>='1'    Archive Folder With Zip    ${CURDIR}/../ResultFile/Result    ${CURDIR}/../ResultFile/Result/${SUITE NAME.rsplit('.')[-1]}-Result-${dateTimeStampResultFolder} .zip    sub_directories=True
+    Run Keyword And Ignore Error    Run Keyword If    '${countFilesRobotLogs}'>='1'    Remove Files    ${path}/*.html    ${path}/*.txt    ${path}/*.png    ${path}/*.webm
+
+TestStatusUpdateJson
+    ${xrayjsonpath}    Set Variable    ${CURDIR}/../Input_Data/xray.json
+    ${Status}    Set Variable    ${TEST_STATUS}
+    log    ${Status}
+    ${testkey}    Set Variable    @{TEST_TAGS}
+    log    ${testkey}
+    ${updatedStatus}    Run keyword if    '${Status}'=='PASS'    Create Dictionary    testKey=${testkey}    status=${Status}
+    Run keyword if    '${Status}'=='PASS'    log    ${updatedStatus}
+    ${xrayjson}    Run keyword if    '${Status}'=='PASS'    Load JSON from file    ${xrayjsonpath}
+    ${latestJson}    Run keyword if    '${Status}'=='PASS'    Add to JSON    ${xrayjson}    $..tests    ${updatedStatus}
+    Run keyword if    '${Status}'=='PASS'    Save JSON to file    ${latestJson}    ${xrayjsonpath}
+    Run Keyword If    '${Status}'=='FAIL'    JiraIssueData
+
+XrayResultsUpload
+    ${auth}    Create List    ${jirauname}    ${jirapwd}
+    ${endpoint}    Set Variable    http://172.24.245.181:8282
+    Create Session    alias    ${endpoint}    auth=${auth}
+    &{headers}    Create Dictionary    Content-Type=application/json    charset=UTF-8
+    ${xrayJsonPath}    Set Variable    ${CURDIR}/../Input_Data/xray.json
+    ${request}    Load JSON from file    ${xrayJsonPath}
+    ${request}    Replace Variables    ${request}
+    ${request}    Convert JSON to String    ${request}
+    ${request}    Replace String    ${request}    '    "
+    ${request}    Convert String to JSON    ${request}
+    Log    ${request}
+    ${response}    Post Request    alias    /rest/raven/1.0/import/execution    ${request}    headers=${headers}
+    Log    ${response}
+    ${status}    Set Variable    ${response.status_code}
+    Log    ${status}
+    Log    ${response.text}
+    Run Keyword If    "${status}"=="200"    ArchiveFile
+
+JiraIssueCreation
+    ${auth}    Create List    ${jirauname}    ${jirapwd}
+    ${endpoint}    Set Variable    http://172.24.245.181:8282
+    Create Session    alias    ${endpoint}    auth=${auth}
+    &{headers}    Create Dictionary    Content-Type=application/json    charset=UTF-8    Accept=application/json
+    ${JiraIssuefilepath}    Set Variable    ${CURDIR}/../ResourceData/JiraIssuefile.json
+    ${request}    Load JSON from file    ${JiraIssuefilepath}
+    ${request}    Replace Variables    ${request}
+    Log    ${request}
+    ${response}    Post Request    alias    /rest/api/2/issue    ${request}    headers=${headers}
+    Log    ${response}
+    ${status}    Set Variable    ${response.status_code}
+    Log    ${status}
+    Log    ${response.text}
+    ${jsonresponse}    To Json    ${response.text}
+    ${issueID}    Get value from JSON    ${jsonresponse}    $..key
+    log    ${issueID}
+    ${issueID}    Create List    ${issueID}
+    ${xrayjsonpath}    Set Variable    ${CURDIR}/../Input_Data/xray.json
+    ${Status}    Set Variable    ${TEST_STATUS}
+    log    ${Status}
+    ${testkey}    Set Variable    @{TEST_TAGS}
+    log    ${testkey}
+    ${updatedStatus}    Create Dictionary    testKey=${testkey}    status=${Status}    defects=${issueID}
+    log    ${updatedStatus}
+    ${xrayjson}    Load JSON from file    ${xrayjsonpath}
+    ${latestJson}    Add to JSON    ${xrayjson}    $..tests    ${updatedStatus}
+    log    ${latestJson}
+    Save JSON to file    ${latestJson}    ${xrayjsonpath}
+
+UpdateXrayFiletoDefault
+    #removing file
+    Remove File    ${CURDIR}/../Input_Data/xray.json
+    #adding core file again to
+    Copy File    ${CURDIR}/../ResourceData/corexrayfile.json    ${CURDIR}/../Input_Data/xray.json
+
+JiraIssueData
+    log    ${TEST_NAME}
+    log    ${TEST_MESSAGE}
+    log    @{TEST_TAGS}
+    ${jiradatapath}    Set Variable    ${CURDIR}/../ResourceData/JiraIssuefile.json
+    ${jirajson}    Load JSON from file    ${jiradatapath}
+    ${updateSummary}    Update value to JSON    ${jirajson}    $..fields.summary    ${TEST_NAME}
+    ${updateDescription}    Update value to JSON    ${jirajson}    $..fields.description    ${TEST_MESSAGE}
+    Comment    ${issuelinkkey}    Update value to JSON    ${jirajson}    $.update.issuelinks[0].outwardIssue.key    @{TEST_TAGS}
+    Save JSON to file    ${jirajson}    ${jiradatapath}
+    Run Keyword If    '${TEST_STATUS}'=='FAIL'    JiraIssueCreation
+
+MoveFileToArchive
+    ${sourcefile}    Set Variable    ${CURDIR}/../ResultFile/Result/*.zip
+    ${destinationpath}    Set Variable    ${CURDIR}/../Archive
+    ${countFiles}    OperatingSystem.Count Files In Directory    ${CURDIR}/../ResultFile/Result
+    Run Keyword If    '${countFiles}'>='1'    OperatingSystem.Move Files    ${sourcefile}    ${destinationpath}
+
+Selfcare_JiraConfigValue
+    ${configurator}    OperatingSystem.Get File    ${CURDIR}/../Input_Data/Selfcare/Selfcare_Config_file.txt
+    &{config}=    Convert string to JSON    ${configurator}
+    @{jiraurl}=    Get values from JSON    ${config}    $.Configurator[*].jiraurl
+    @{jirauname}=    Get values from JSON    ${config}    $.Configurator[*].jirauname
+    @{jirapwd}=    Get values from JSON    ${config}    $.Configurator[*].jirapwd
+    @{testplankey}=    Get values from JSON    ${config}    $.Configurator[*].testplankey
+    ${jiraurl}=    Convert To String    @{jiraurl}
+    ${jirauname}=    Convert To String    @{jirauname}
+    ${jirapwd}=    Convert To String    @{jirapwd}
+    ${testplankey}=    Convert To String    @{testplankey}
+    Set Global Variable    ${jiraurl}
+    Set Global Variable    ${jirauname}
+    Set Global Variable    ${jirapwd}
+    Set Global Variable    ${testplankey}
+    ${xrayjsonpath}    Set Variable    ${CURDIR}/../Input_Data/xray.json
+    ${xrayjson}    Load JSON from file    ${xrayjsonpath}
+    ${latestJson}    Update value to JSON    ${xrayjson}    $..testPlanKey    ${testplankey}
+    Save JSON to file    ${latestJson}    ${xrayjsonpath}
+
+Selfcare_ExecutorUpdateTestsFromJira
+    ${auth}    Create List    ${jirauname}    ${jirapwd}
+    ${endpoint}    Set Variable    ${jiraurl}
+    Create Session    alias    ${endpoint}    auth=${auth}
+    &{headers}    Create Dictionary    Content-Type=application/json    charset=UTF-8
+    ${response}    Get Request    alias    /rest/raven/1.0/api/testplan/${testplankey}/test    headers=${headers}
+    Log    ${response}
+    ${status}    Set Variable    ${response.status_code}
+    Log    ${status}
+    Log    ${response.text}
+    ${response}    Set Variable    ${response.text}
+    ${executorpath}    Set Variable    ${CURDIR}/../Input_Data/Selfcare/Selfcare_Executor.json
+    ${updatetestcases}    Load JSON from file    ${executorpath}
+    ${latesttestcases}    Update value to JSON    ${updatetestcases}    $..tests    ${response}
+    Save JSON to file    ${latesttestcases}    ${executorpath}
+    Run Keyword If    "${status}"=="200"    Selfcare_ExecutorUpdateEnvfromJira
+
+Selfcare_ExecutorUpdateEnvfromJira
+    ${auth}    Create List    ${jirauname}    ${jirapwd}
+    ${endpoint}    Set Variable    ${jiraurl}
+    Create Session    alias    ${endpoint}    auth=${auth}
+    &{headers}    Create Dictionary    Content-Type=application/json    charset=UTF-8
+    ${response}    Get Request    alias    rest/api/2/issue/${testplankey}    headers=${headers}
+    Log    ${response}
+    ${status}    Set Variable    ${response.status_code}
+    Log    ${status}
+    Log    ${response.text}
+    ${response}    To Json    ${response.text}
+    ${executorpath}    Set Variable    ${CURDIR}/../Input_Data/Selfcare/Selfcare_Executor.json
+    ${executorfile}    Load JSON from file    ${executorpath}
+    ${environment}    Get value from JSON    ${response}    $..fields.customfield_10224[0]
+    ${environment}    Update value to JSON    ${executorfile}    $..Environment    ${environment}
+    Save JSON to file    ${executorfile}    ${executorpath}
+
+Selfcare_ExecutorExcel_Setup
+    ${executor}    OperatingSystem.Get File    ${CURDIR}/../Input_Data/Selfcare/Selfcare_Executor.json
+    &{values}=    Convert string to JSON    ${executor}
+    @{names}=    Get values from JSON    ${values}    $.tests[*].key
+    ${exec_env}=    Get values from JSON    ${values}    $..Environment
+    ${exec_env_cnt}=    Get length    ${exec_env}
+    ${configurator}    OperatingSystem.Get File    ${CURDIR}/../Input_Data/Selfcare/Selfcare_Config_file.txt
+    &{config}=    Convert string to JSON    ${configurator}
+    @{config_env}=    Get values from JSON    ${config}    $.Configurator[*].Environment
+    ${config_env_cnt}=    Get length    ${config_env}
+    Log Many    @{config_env}
+    ${config_env}=    Convert To String    @{config_env}
+    Log Many    @{names}
+    FOR    ${name}    IN    @{names}
+    log    ${name}
+    log    ${A1}
+    @{dict}=    read csv file to associative    ${SELFCARE_EXCEL_FILE}
+    log many    ${dict}
+    ${dictlen}=    Get length    ${dict}
+    ${i}    Set Variable    1
+    FOR    ${i}    IN RANGE    ${dictlen}
+        log    ${dict[${i}]['Flag']}
+        log    ${dict[${i}]['JiraID']}
+        log    ${dict[${i}]['TestcaseID']}
+        IF    '${dict[${i}]['JiraID']}'=='${name}'
+        set to dictionary    ${dict[${i}]}    Flag    Y
+        log many    ${dict[${i}]}
+        csv file from associative    ${SELFCARE_EXCEL_FILE}    ${dict}
+    END
+    END
+    END
+    FOR    ${config_envi}    IN    ${config_env}
+        IF    "${exec_env}[${a}]" == "${config_envi}"
+        Log    ${config_envi}
+        @{config_URL}=    Get values from JSON    ${config}    $.Configurator[${b}].URL
+        Set Global Variable    @{config_URL}
+        log    ${b}
+    END
+    log    ${b}
+    ${b}=    Evaluate    ${b} + 1
+    ${a}=    Evaluate    ${a} + 1
+    END

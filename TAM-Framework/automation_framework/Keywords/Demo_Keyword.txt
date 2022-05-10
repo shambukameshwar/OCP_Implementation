@@ -1,0 +1,103 @@
+*** Settings ***
+Library           DateTime
+Resource          ../ResourceData/Resources.txt
+Resource          ../ResourceData/Demo/Demo_Locators.txt
+Library           OperatingSystem
+Library           String
+Resource          Demo_Setup_TearDown.txt
+Library           XML
+Library           RPA.Database
+Library           RPA.JSON
+Library           RPA.Browser.Selenium
+Library           RPA.Desktop
+Library           FakerLibrary
+Library           RPA.Database
+Library           BuiltIn
+Library           String
+Library           RPA.Email.Exchange
+Library           AppiumLibrary
+
+*** Keywords ***
+Take _Screenshot
+    ${dateTimeStampScreenshot}    Get Current Date    result_format=%d-%m-%Y-%H-%M-%S
+    RPA.Browser.Selenium.Capture Page Screenshot    ${SCREENSHOT_DIR}/${SUITE NAME.rsplit('.')}-${TEST NAME}-${dateTimeStampScreenshot}.png
+
+Demo_VariableValueRetreive
+    ${Username Value}    Set Variable    ${testData['UserName']}
+    Set Global Variable    ${Username Value}
+    ${Password Value}    Set Variable    ${testData['Password']}
+    Set Global Variable    ${Password Value}
+    ${firstnamevalue}    Set Variable    ${testData['firstname']}
+    Set Global Variable    ${firstnamevalue}
+    ${lastnamevalue}    Set Variable    ${testData['lastname']}
+    Set Global Variable    ${lastnamevalue}
+    ${zipcodevalue}    Set Variable    ${testData['zipcode']}
+    Set Global Variable    ${zipcodevalue}
+
+Login_Saucedemo
+    RPA.Browser.Selenium.Wait Until Element Is Visible    ${login_username}    30s
+    RPA.Browser.Selenium.Input Text    ${login_username}    ${Username Value}
+    RPA.Browser.Selenium.Input Text    ${login_password}    ${Password Value}
+    sleep    5s
+    RPA.Browser.Selenium.Wait Until Element Is Visible    ${Login Button}    10s
+    RPA.Browser.Selenium.Click Element    ${Login Button}
+    RPA.Browser.Selenium.Capture Page Screenshot    ${SCREENSHOT_DIR}/${SUITE NAME.rsplit('.')}-Login_Saucedemo.png
+
+Purchase_Order
+    RPA.Browser.Selenium.Wait Until Element Is Visible    ${cartbutton}    30s
+    RPA.Browser.Selenium.Click Element    ${cartbutton}
+    Take _Screenshot
+    RPA.Browser.Selenium.Wait Until Element Is Visible    ${opencartbutton}    30s
+    RPA.Browser.Selenium.Click Element    ${opencartbutton}
+    Take _Screenshot
+    RPA.Browser.Selenium.Wait Until Element Is Visible    ${checkoutbutton}    30s
+    RPA.Browser.Selenium.Click Element    ${checkoutbutton}
+    RPA.Browser.Selenium.Wait Until Element Is Visible    ${firstname}    30s
+    RPA.Browser.Selenium.Input Text    ${firstname}    ${firstnamevalue}
+    RPA.Browser.Selenium.Input Text    ${lastname}    ${lastnamevalue}
+    RPA.Browser.Selenium.Input Text    ${zipcode}    ${zipcodevalue}
+    Take _Screenshot
+    RPA.Browser.Selenium.Wait Until Element Is Visible    ${continuebutton}    30s
+    RPA.Browser.Selenium.Click Element    ${continuebutton}
+    RPA.Browser.Selenium.Wait Until Element Is Visible    ${finishbutton}    30s
+    RPA.Browser.Selenium.Click Element    ${finishbutton}
+    Take _Screenshot
+    RPA.Browser.Selenium.Element Should Contain    ${validate_order}    THANK YOU FOR YOUR ORDER
+
+Saucedemo_URL
+    Open Browser    ${Saucdemo_URL}    ${browser}
+    Maximize Browser Window
+    Delete All Cookies
+    RPA.Browser.Selenium.Capture Page Screenshot    ${SCREENSHOT_DIR}/${SUITE NAME.rsplit('.')}-Saucedemo_URL.png
+
+Open_chat_Application
+    AppiumLibrary.Open Application    http://localhost:4723/wd/hub    platformName=Android    deviceName=emulator-5554    appPackage=chat21.android.demo    appActivity=chat21.android.demo.SplashActivity
+    AppiumLibrary.Capture Page Screenshot    ${SCREENSHOT_DIR}/${SUITE NAME.rsplit('.')}-Open_Mob_App.png
+
+Popup_alert
+    AppiumLibrary.Wait Until Page Contains Element    ${Mob_continue_button}    30s
+    AppiumLibrary.Click Element    ${Mob_continue_button}
+    sleep    10s
+    AppiumLibrary.Wait Until Page Contains Element    ${Mob_update_button}    30s
+    AppiumLibrary.Click Element    ${Mob_update_button}
+    AppiumLibrary.Capture Page Screenshot    ${SCREENSHOT_DIR}/${SUITE NAME.rsplit('.')}-Popup_alert.png
+
+login_with_user
+    AppiumLibrary.Wait Until Element Is Visible    ${Mob_login_email_field}    30s
+    AppiumLibrary.Input Text    ${Mob_login_email_field}    ${Mob_user_name}
+    AppiumLibrary.Input Text    ${Mob_login_password_field}    ${Mob_password}
+    AppiumLibrary.Capture Page Screenshot    ${SCREENSHOT_DIR}/${SUITE NAME.rsplit('.')}-login_with_user.png
+    AppiumLibrary.Click Element    ${Mob_login_button}
+
+logout_user
+    AppiumLibrary.Wait Until Element Is Visible    ${Mob_main_home_tab}    30s
+    AppiumLibrary.Click Element    ${Mob_main_profile_tab}
+    AppiumLibrary.Wait Until Element Is Visible    ${Mob_logout_button}
+    AppiumLibrary.Click Element    ${Mob_logout_button}
+    AppiumLibrary.Wait Until Page Contains Element    ${Mob_login_email_field}    30s
+    AppiumLibrary.Capture Page Screenshot    ${SCREENSHOT_DIR}/${SUITE NAME.rsplit('.')}-logout_user.png
+    AppiumLibrary.Close Application
+
+Open_chat_Application_Cloud
+    AppiumLibrary.Open Application    https://shambukameshwarb_54qm32:RbQd97oprxraGxJUdmxX@hub-cloud.browserstack.com/wd/hub    build=Python Android    device=Samsung Galaxy S8 Plus    app=bs://80eb35259a1247dad3ff3a0b3deb28c60105ab6e
+    AppiumLibrary.Capture Page Screenshot    ${SCREENSHOT_DIR}/${SUITE NAME.rsplit('.')}-Open_Mob_App.png

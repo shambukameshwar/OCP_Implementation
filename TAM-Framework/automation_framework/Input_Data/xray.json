@@ -1,0 +1,1 @@
+{"info": {"summary": "Execution of automated tests for Sanity", "testPlanKey": "QAD-45287", "description": "Execution for Daily sanity suite created automatically", "testEnvironments": ["Preprod"]}, "tests": []}

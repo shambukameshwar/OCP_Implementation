@@ -1,0 +1,12 @@
+{
+"Configurator": [
+                    	{
+				"Environment":  "Major",
+				"URL": "https://172.24.245.75:7609/servlet/du/en/home.html",
+				"jiraurl": "http://172.24.245.181:8282",
+				"jirauname": "Jeeva Allan John",
+				"jirapwd": "6D?cX9Bh",
+				"testplankey": "QAD-45287"	  
+			}
+                 ]
+}

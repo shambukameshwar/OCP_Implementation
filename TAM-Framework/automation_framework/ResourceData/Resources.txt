@@ -1,0 +1,4 @@
+*** Variables ***
+${TIMEOUT}        20
+${Demo_CSV_FILE}    ${CURDIR}/../Input_Data/Demo/Demo_TestData.csv    #Selfcare input data sheet
+${SCREENSHOT_DIR}    ${CURDIR}/../ResultFile/Result    #Screenshot Directory

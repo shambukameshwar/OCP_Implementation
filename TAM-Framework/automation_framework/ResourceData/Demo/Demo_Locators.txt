@@ -1,0 +1,30 @@
+*** Variables ***
+${Saucdemo_URL}    https://www.saucedemo.com
+${browser}        chrome
+${login_username}    id:user-name
+${login_password}    id:password
+${Login Button}    id:login-button
+${cartbutton}     id:add-to-cart-sauce-labs-backpack
+${opencartbutton}    xpath://*[@id="shopping_cart_container"]/a
+${checkoutbutton}    id:checkout
+${firstname}      id:first-name
+${lastname}       id:last-name
+${zipcode}        id:postal-code
+${continuebutton}    id:continue
+${validate_order}    xpath://h2[text()='THANK YOU FOR YOUR ORDER']
+${Mob_appium_pourt}    http://localhost:4723/wd/hub
+${Mob_platform_name}    platformName=Android
+${Mob_device_name}    deviceName=emulator-5554
+${Mob_app_package}    appPackage=chat21.android.demo
+${Mob_app_activity}    appActivity=chat21.android.demo.SplashActivity
+${Mob_continue_button}    //*[contains(@text,"Continue")]
+${Mob_update_button}    //*[contains(@text,"OK")]
+${Mob_login_email_field}    id=chat21.android.demo:id/email
+${Mob_login_password_field}    id=chat21.android.demo:id/password
+${Mob_login_button}    id=chat21.android.demo:id/login
+${Mob_main_home_tab}    //android.widget.TextView[@text="HOME"]
+${Mob_main_profile_tab}    //android.widget.TextView[@text="PROFILE"]
+${Mob_logout_button}    id=chat21.android.demo:id/logout
+${Mob_user_name}    shambu@demo.com
+${Mob_password}    demo123
+${finishbutton}    id:finish
