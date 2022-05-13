@@ -47,7 +47,7 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-WORKDIR /robot/TestSuite/BSCS/
+WORKDIR /robot/TestSuite/demo_web_api/
 
 #Robot Specific
 ENTRYPOINT ["robot"]
